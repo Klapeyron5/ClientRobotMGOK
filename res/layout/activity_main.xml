@@ -10,29 +10,16 @@
     tools:context="space.klapeyron.clientrobotmgok.MainActivity"
     android:background="#ffffff">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/call_button"
-        android:adjustViewBounds="false"
-        android:background="#972a2a"
-        android:onClick="sendTaskXYMessage"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Отменить"
         android:onClick="threadCancel"
         android:id="@+id/buttonStopRobot"
-        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/buttonDiscoverDevices"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/textViewLog"
-        android:layout_toLeftOf="@+id/textViewLog"
-        android:layout_margin="2dp" />
+        android:layout_toStartOf="@+id/buttonMap" />
 
     <Button
         android:layout_width="wrap_content"
@@ -40,42 +27,19 @@
         android:text="Подключиться"
         android:id="@+id/buttonDiscoverDevices"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/buttonStopRobot"
-        android:layout_toEndOf="@+id/buttonStopRobot"
-        android:layout_margin="2dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/buttonMap"
+        android:layout_toEndOf="@+id/buttonMap" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Не подсоединен"
         android:id="@+id/textViewLog"
+        android:textSize="20dp"
         android:layout_below="@+id/buttonStopRobot"
-        android:layout_centerHorizontal="true"
-        android:textSize="20dp" />
-
-    <EditText
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextX"
-        android:layout_above="@+id/textViewLog"
-        android:layout_toRightOf="@+id/buttonDiscoverDevices"
-        android:layout_toEndOf="@+id/buttonDiscoverDevices"
-        android:text="0"
-        android:layout_margin="2dp" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextY"
-        android:layout_alignTop="@+id/editTextX"
-        android:layout_toRightOf="@+id/editTextX"
-        android:layout_toEndOf="@+id/editTextX"
-        android:text="0"
-        android:layout_margin="2dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -83,6 +47,16 @@
         android:layout_height="wrap_content"
         android:text="map"
         android:id="@+id/buttonMap"
-        android:layout_alignBottom="@+id/imageButton" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:background="@drawable/robot"
+        android:scaleType="center"
+        android:layout_below="@+id/textViewLog"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
