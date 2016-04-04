@@ -274,10 +274,6 @@ public class MainActivity extends Activity {
 
         textViewLog = (TextView) findViewById(R.id.textViewLog);
         setClientState(clientState);
-        editTextX = (EditText) findViewById(R.id.editTextX);
-        editTextY = (EditText) findViewById(R.id.editTextY);
-        editTextX.setText(Integer.toString(currentX));
-        editTextY.setText(Integer.toString(currentY));
     }
 
     @Override
