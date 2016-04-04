@@ -45,6 +45,8 @@ public class MainActivity extends Activity {
 
     private static final int REQUEST_ENABLE_BT = 0; //>=0 for run onActivityResult from startActivityForResult
     private static final String UUID = "e91521df-92b9-47bf-96d5-c52ee838f6f6";
+    private static final String ROBOT_SERVER_NAME = "RobotServerMGOK";
+    private static final String ROBOT_SERVER_ADRESS = "78:24:AF:64:3E:54";
 
     BluetoothAdapter bluetoothAdapter; //локальный БТ адаптер
     private Set<BluetoothDevice> pairedDevices; //спаренные девайсы
@@ -225,10 +227,14 @@ public class MainActivity extends Activity {
     private void connectMethod() {
         setClientState(CLIENT_CONNECTING);
         try {
-            serverSocket = selectedServer.createRfcommSocketToServiceRecord(java.util.UUID.fromString(UUID));
-            serverSocket.connect(); //send connection request to server, and server send back the confirmation, what server is ready
-            ReadMessage readMessage = new ReadMessage();
-            readMessage.start();
+            if ((selectedServer.getName().equals(ROBOT_SERVER_NAME))&&(selectedServer.getAddress().equals(ROBOT_SERVER_ADRESS))) {
+                serverSocket = selectedServer.createRfcommSocketToServiceRecord(java.util.UUID.fromString(UUID));
+                serverSocket.connect(); //send connection request to server, and server send back the confirmation, what server is ready
+                ReadMessage readMessage = new ReadMessage();
+                readMessage.start();
+            } else {
+                setClientState(CLIENT_NO_CONNECTION);
+            }
         } catch (IOException e) {
             setClientState(CLIENT_NO_CONNECTION);
         }
