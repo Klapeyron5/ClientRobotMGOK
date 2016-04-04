@@ -67,6 +67,8 @@ public class MainActivity extends Activity {
 
     public int currentX;
     public int currentY;
+    public int previousX;
+    public int previousY;
     public String absolutePath = null;
 
     //***BLE***
@@ -426,6 +428,8 @@ public class MainActivity extends Activity {
             if (key.equals("path")) {
                 currentX = fX;
                 currentY = fY;
+                previousX = fX;
+                previousY = fY;
                 interactiveMapView.startX = fX;
                 interactiveMapView.startY = fY;
                 Log.i(TAG, "PATH: " + a[4]);
@@ -475,6 +479,8 @@ public class MainActivity extends Activity {
                     e.printStackTrace();
                 }
                 setClientState(CLIENT_ROBOT_REACHED_TARGET_NO_CONNECTION);
+                previousX = currentX;
+                previousY = currentY;
             }
         } catch (ArrayIndexOutOfBoundsException e) {} catch (IndexOutOfBoundsException e) {}
     }

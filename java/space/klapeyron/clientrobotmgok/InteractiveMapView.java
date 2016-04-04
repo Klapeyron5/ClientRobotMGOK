@@ -36,6 +36,7 @@ public class InteractiveMapView extends View {
     private final int COLOR_RED = 0xffff0505;
     private final int COLOR_BLACK = 0xff000000;
     private final int COLOR_DARK_NAVY = 0xff140F5C;
+    private final int COLOR_LIGHT_BLUE = 0xff0089FF;
     private final int COLOR_NAVY = 0xff281DC7;
     private final int COLOR_GRAY = 0xff8AA18D;
 
@@ -301,6 +302,20 @@ public class InteractiveMapView extends View {
                 sX = cX;
                 sY = cY;
             }
+        }
+    }
+
+    public void drawRobotRiding() {
+        if ((mainActivity.previousX != mainActivity.currentX)||(mainActivity.previousY != mainActivity.currentY)) {
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setDither(true);
+            paint.setColor(COLOR_LIGHT_BLUE);
+            paint.setStrokeWidth(cellsLineWidth);
+            paint.setStyle(Paint.Style.FILL);
+
+            mCanvas.drawLine(mainActivity.previousX*cellWidth+cellWidth/2,mainActivity.previousY*cellHeight,
+                    mainActivity.currentX*cellWidth+cellWidth/2,mainActivity.currentY*cellHeight+cellHeight/2,paint);
         }
     }
 
