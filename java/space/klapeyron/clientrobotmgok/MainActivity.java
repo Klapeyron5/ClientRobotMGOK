@@ -61,7 +61,6 @@ public class MainActivity extends Activity {
     MainActivity link = this;
     InteractiveMapView interactiveMapView;
 
-    ListView listView;
     TextView textViewLog;
     EditText editTextX;
     EditText editTextY;
@@ -279,20 +278,6 @@ public class MainActivity extends Activity {
         editTextY = (EditText) findViewById(R.id.editTextY);
         editTextX.setText(Integer.toString(currentX));
         editTextY.setText(Integer.toString(currentY));
-
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(btDevicesAdapterList);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (clientState != CLIENT_CONNECTING) {
-                    selectedServer = discoveredDevices.get(position);
-                    Log.i(TAG, "SelectedServer: " + selectedServer.getName());
-                    bluetoothAdapter.cancelDiscovery();
-                    connectMethod();
-                }
-            }
-        });
     }
 
     @Override
@@ -333,16 +318,6 @@ public class MainActivity extends Activity {
 
 
 
-    private final BroadcastReceiver incomingPairRequestReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i("TAG", "incomingPairRequestReceiver");
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_PAIRING_REQUEST.equals(action)) {
-                Log.i("TAG", "запрос на сопряжение");
-            }
-        }
-    };
 
     //ресиверы для организации поиска БТ девайсов
     private final BroadcastReceiver discoveryStartedReceiver = new BroadcastReceiver() {
@@ -358,6 +333,16 @@ public class MainActivity extends Activity {
                 discoveredDevices.add(device);
                 // Add the name and address to an array adapter to show in a ListView
                 btDevicesAdapterList.add(device.getName() + "\n" + device.getAddress());
+
+                //TODO
+                if ((device.getName().equals(ROBOT_SERVER_NAME))&&(device.getAddress().equals(ROBOT_SERVER_ADRESS))) {
+                    if (clientState != CLIENT_CONNECTING) {
+                        selectedServer = device;
+                        Log.i(TAG, "SelectedServer: " + selectedServer.getName());
+                        bluetoothAdapter.cancelDiscovery();
+                        connectMethod();
+                    }
+                }
             }
         }
     };
