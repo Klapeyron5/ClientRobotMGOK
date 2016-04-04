@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="space.klapeyron.clientrobotmgok.MainActivity"
+    android:background="#ffffff">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:src="@drawable/call_button"
+        android:adjustViewBounds="false"
+        android:background="#972a2a"
+        android:onClick="sendTaskXYMessage"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отменить"
+        android:onClick="threadCancel"
+        android:id="@+id/buttonStopRobot"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/textViewLog"
+        android:layout_toLeftOf="@+id/textViewLog"
+        android:layout_margin="2dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Поиск"
+        android:id="@+id/buttonDiscoverDevices"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/buttonStopRobot"
+        android:layout_toEndOf="@+id/buttonStopRobot"
+        android:layout_margin="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Не подсоединен"
+        android:id="@+id/textViewLog"
+        android:layout_below="@+id/buttonStopRobot"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/imageButton"
+        android:layout_below="@+id/textViewLog" />
+
+    <EditText
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextX"
+        android:layout_above="@+id/textViewLog"
+        android:layout_toRightOf="@+id/buttonDiscoverDevices"
+        android:layout_toEndOf="@+id/buttonDiscoverDevices"
+        android:text="0"
+        android:layout_margin="2dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextY"
+        android:layout_alignTop="@+id/editTextX"
+        android:layout_toRightOf="@+id/editTextX"
+        android:layout_toEndOf="@+id/editTextX"
+        android:text="0"
+        android:layout_margin="2dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="map"
+        android:id="@+id/buttonMap"
+        android:layout_alignBottom="@+id/imageButton"
+        android:layout_alignRight="@+id/listView"
+        android:layout_alignEnd="@+id/listView" />
+
+</RelativeLayout>
