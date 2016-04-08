@@ -67,9 +67,12 @@ public class MainActivity extends Activity {
 
     public int currentX;
     public int currentY;
+    public int currentDir;
     public int previousX;
     public int previousY;
+    public int previousDir;
     public String absolutePath = null;
+    public ArrayList<int[]> passedPath = null;
 
     //***BLE***
     ArrayList<String> beacons = new ArrayList<String>();
@@ -333,7 +336,7 @@ public class MainActivity extends Activity {
                 btDevicesAdapterList.add(device.getName() + "\n" + device.getAddress());
 
                 //TODO
-                if ((device.getName().equals(ROBOT_SERVER_NAME))&&(device.getAddress().equals(ROBOT_SERVER_ADRESS))) {
+                if ((device.getName().equals(ROBOT_SERVER_NAME))){//&&(device.getAddress().equals(ROBOT_SERVER_ADRESS))) {
                     if (clientState != CLIENT_CONNECTING) {
                         selectedServer = device;
                         Log.i(TAG, "SelectedServer: " + selectedServer.getName());
@@ -356,15 +359,18 @@ public class MainActivity extends Activity {
     private void connectMethod() {
         setClientState(CLIENT_CONNECTING);
         try {
-            if ((selectedServer.getName().equals(ROBOT_SERVER_NAME))&&(selectedServer.getAddress().equals(ROBOT_SERVER_ADRESS))) {
+            if ((selectedServer.getName().equals(ROBOT_SERVER_NAME))){//&&(selectedServer.getAddress().equals(ROBOT_SERVER_ADRESS))) {
                 serverSocket = selectedServer.createRfcommSocketToServiceRecord(java.util.UUID.fromString(UUID));
+                Log.i("TAG", "try to connect");
                 serverSocket.connect(); //send connection request to server, and server send back the confirmation, what server is ready
                 ReadMessage readMessage = new ReadMessage();
                 readMessage.start();
             } else {
+                Log.i("TAG", "no server name");
                 setClientState(CLIENT_NO_CONNECTION);
             }
         } catch (IOException e) {
+            Log.i("TAG", "connect exception");
             setClientState(CLIENT_NO_CONNECTION);
         }
     }
@@ -417,8 +423,10 @@ public class MainActivity extends Activity {
             String key = a[1];
             String X = a[2];
             String Y = a[3];
+            String dir = a[4];
             int fX = Integer.parseInt(X.toString());
             int fY = Integer.parseInt(Y.toString());
+            int fDir = Integer.parseInt(dir.toString());
 
 
             if (key.equals("ready")) {
@@ -428,33 +436,40 @@ public class MainActivity extends Activity {
             if (key.equals("path")) {
                 currentX = fX;
                 currentY = fY;
+                currentDir = fDir;
                 previousX = fX;
                 previousY = fY;
+                previousDir = fDir;
+                passedPath = new ArrayList<>();
+                passedPath.add(new int[]{currentX, currentY});
                 interactiveMapView.startX = fX;
                 interactiveMapView.startY = fY;
+                interactiveMapView.startDir = fDir;
                 Log.i(TAG, "PATH: " + a[4]);
-                absolutePath = a[4];
+                absolutePath = a[5];
                 if (activityState == ACTIVITY_STATE_INTERACTIVE_MAP)
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            interactiveMapView.drawConstructor(currentX, currentY);
+                            interactiveMapView.drawConstructor(currentX, currentY, currentDir);
                         }
                     });
             }
             if (key.equals("currentXY")) {
                 currentX = fX;
                 currentY = fY;
+                currentDir = fDir;
+                passedPath.add(new int[]{currentX, currentY});
                 //TODO draw on map
                 if (activityState == ACTIVITY_STATE_INTERACTIVE_MAP)
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            interactiveMapView.drawConstructor(currentX, currentY);
+                            interactiveMapView.drawConstructor(currentX, currentY, currentDir);
                         }
                     });
                 setClientState(CLIENT_ROBOT_EXECUTING_TASK);
-                for(int i=4;i<a.length;i++) {
+                for(int i=5;i<a.length;i++) {
                     if (a[i].equals("target")) {
                         try {
                             if (serverSocket.isConnected())
