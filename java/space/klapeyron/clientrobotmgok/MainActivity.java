@@ -356,7 +356,7 @@ public class MainActivity extends Activity {
     private void connectMethod() {
         setClientState(CLIENT_CONNECTING);
         try {
-            if ((selectedServer.getName().equals(ROBOT_SERVER_NAME))&&(selectedServer.getAddress().equals(ROBOT_SERVER_ADRESS))) {
+            if (selectedServer.getName().equals(ROBOT_SERVER_NAME))/*&&(selectedServer.getAddress().equals(ROBOT_SERVER_ADRESS)))*/ {
                 serverSocket = selectedServer.createRfcommSocketToServiceRecord(java.util.UUID.fromString(UUID));
                 serverSocket.connect(); //send connection request to server, and server send back the confirmation, what server is ready
                 ReadMessage readMessage = new ReadMessage();
