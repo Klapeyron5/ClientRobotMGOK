@@ -19,6 +19,7 @@ public class InteractiveMapView extends View {
     private MainActivity mainActivity;
     public int startX;
     public int startY;
+    public int startDir;
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
@@ -39,6 +40,7 @@ public class InteractiveMapView extends View {
     private final int COLOR_LIGHT_BLUE = 0xff0089FF;
     private final int COLOR_NAVY = 0xff281DC7;
     private final int COLOR_GRAY = 0xff8AA18D;
+    private final int COLOR_ORANGE = 0xffFF8000;
 
     int[][] landscape = {
             {1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -77,7 +79,7 @@ public class InteractiveMapView extends View {
         Log.i(mainActivity.TAG, "1");
     //    setEmptyMapBitmap();
     //    drawRobotOnMap(mainActivity.currentX,mainActivity.currentY);
-        drawConstructor(mainActivity.currentX,mainActivity.currentY);
+        drawConstructor(mainActivity.currentX,mainActivity.currentY,mainActivity.currentDir);
         Log.i(mainActivity.TAG, "2");
     }
 
@@ -95,7 +97,7 @@ public class InteractiveMapView extends View {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 setEmptyMapBitmap();
-                drawRobotOnMap(mainActivity.currentX, mainActivity.currentY);
+                drawRobotOnMap(mainActivity.currentX, mainActivity.currentY,mainActivity.currentDir);
                 Paint paintForCoordinates = new Paint();
                 paintForCoordinates.setColor(COLOR_DARK_NAVY);
                 paintForCoordinates.setStrokeWidth(cellWidth-cellsLineWidth);
@@ -115,7 +117,7 @@ public class InteractiveMapView extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 setEmptyMapBitmap();
-                drawRobotOnMap(mainActivity.currentX, mainActivity.currentY);
+                drawRobotOnMap(mainActivity.currentX, mainActivity.currentY,mainActivity.currentDir);
                 paintForCoordinates = new Paint();
                 paintForCoordinates.setColor(COLOR_DARK_NAVY);
                 paintForCoordinates.setStrokeWidth(cellWidth-cellsLineWidth);
@@ -132,7 +134,7 @@ public class InteractiveMapView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 setEmptyMapBitmap();
-                drawRobotOnMap(mainActivity.currentX,mainActivity.currentY);
+                drawRobotOnMap(mainActivity.currentX,mainActivity.currentY,mainActivity.currentDir);
                 paintForCoordinates = new Paint();
                 paintForCoordinates.setColor(COLOR_NAVY);
                 paintForCoordinates.setStrokeWidth(cellWidth - cellsLineWidth);
@@ -159,10 +161,11 @@ public class InteractiveMapView extends View {
         return true;
     }
 
-    public void drawConstructor(int X, int Y) {
+    public void drawConstructor(int X, int Y, int dir) {
         setEmptyMapBitmap();
-        drawRobotOnMap(X, Y);
         drawAbsolutePath();
+        drawPassedPath();
+        drawRobotOnMap(X, Y, dir);
         invalidate();
     }
 
@@ -222,7 +225,7 @@ public class InteractiveMapView extends View {
         }
     }
 
-    public void drawRobotOnMap(int X, int Y) {
+    public void drawRobotOnMap(int X, int Y, int dir) {
         Paint paintR1 = new Paint();
         paintR1.setAntiAlias(true);
         paintR1.setDither(true);
@@ -243,10 +246,30 @@ public class InteractiveMapView extends View {
         paintR3.setColor(COLOR_RED);
         paintR3.setStrokeWidth(cellsLineWidth);
         paintR3.setStyle(Paint.Style.STROKE);
-        if ((X >= 0)&&(Y >= 0)) {
-            mCanvas.drawCircle(X * cellWidth + cellWidth / 2, Y * cellHeight + cellHeight / 2, cellWidth / 4, paintR1);
-            mCanvas.drawCircle(X * cellWidth + cellWidth / 2, Y * cellHeight + cellHeight / 2, cellWidth / 4 - 3, paintR2);
-            mCanvas.drawText("R", X * cellWidth + cellWidth / 2, Y * cellHeight + cellHeight / 2, paintR3);
+
+        if ((X >= 0)&&(Y >= 0)&&(dir >= 0)) {
+            float stopX = X * cellWidth + cellWidth / 2;
+            float stopY = Y * cellHeight + cellHeight / 2;
+            float radius = cellWidth / 4;
+            mCanvas.drawCircle(stopX, stopY, radius, paintR1);
+            mCanvas.drawCircle(stopX, stopY, radius - 3, paintR2);
+    //        mCanvas.drawText("R", stopX, stopY, paintR3);
+            radius += 3;
+            switch (dir) {
+                case 0:
+                    stopX += radius;
+                    break;
+                case 1:
+                    stopY += radius;
+                    break;
+                case 2:
+                    stopX -= radius;
+                    break;
+                case 3:
+                    stopY -= radius;
+                    break;
+            }
+            mCanvas.drawLine(X * cellWidth + cellWidth / 2,Y * cellHeight + cellHeight / 2,stopX,stopY,paintR1);
         }
     }
 
@@ -305,8 +328,8 @@ public class InteractiveMapView extends View {
         }
     }
 
-    public void drawRobotRiding() {
-        if ((mainActivity.previousX != mainActivity.currentX)||(mainActivity.previousY != mainActivity.currentY)) {
+    public void drawPassedPath() {
+        if ((mainActivity.passedPath != null)&&(startX>=0)&&(startY>=0)) {
             Paint paint = new Paint();
             paint.setAntiAlias(true);
             paint.setDither(true);
@@ -314,8 +337,12 @@ public class InteractiveMapView extends View {
             paint.setStrokeWidth(cellsLineWidth);
             paint.setStyle(Paint.Style.FILL);
 
-            mCanvas.drawLine(mainActivity.previousX*cellWidth+cellWidth/2,mainActivity.previousY*cellHeight,
-                    mainActivity.currentX*cellWidth+cellWidth/2,mainActivity.currentY*cellHeight+cellHeight/2,paint);
+            for (int i=0;i<mainActivity.passedPath.size()-1;i++) {
+                mCanvas.drawLine(mainActivity.passedPath.get(i)[0]*cellWidth+cellWidth/2,
+                                 mainActivity.passedPath.get(i)[1]*cellHeight+cellHeight/2,
+                                 mainActivity.passedPath.get(i+1)[0]*cellWidth+cellWidth/2,
+                                 mainActivity.passedPath.get(i+1)[1]*cellHeight+cellHeight/2,paint);
+            }
         }
     }
 
