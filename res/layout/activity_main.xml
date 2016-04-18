@@ -59,4 +59,43 @@
         android:layout_below="@+id/textViewLog"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fwd"
+        android:id="@+id/buttonMappingForward"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lft"
+        android:id="@+id/buttonMappingTurnLeft"
+        android:layout_alignBottom="@+id/buttonMappingForward"
+        android:layout_toRightOf="@+id/buttonMappingForward"
+        android:layout_toEndOf="@+id/buttonMappingForward" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rgt"
+        android:id="@+id/buttonMappingTurnRight"
+        android:layout_toRightOf="@+id/buttonMappingTurnLeft"
+        android:layout_toEndOf="@+id/buttonMappingTurnLeft"
+        android:layout_alignTop="@+id/buttonMappingTurnLeft" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="msr"
+        android:id="@+id/buttonMappingMeasure"
+        android:layout_alignTop="@+id/buttonMappingTurnRight"
+        android:layout_toRightOf="@+id/buttonMappingTurnRight" />
+
 </RelativeLayout>

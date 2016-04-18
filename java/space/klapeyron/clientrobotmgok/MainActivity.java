@@ -62,8 +62,6 @@ public class MainActivity extends Activity {
     InteractiveMapView interactiveMapView;
 
     TextView textViewLog;
-    EditText editTextX;
-    EditText editTextY;
 
     public int currentX;
     public int currentY;
@@ -277,6 +275,42 @@ public class MainActivity extends Activity {
             }
         });
 
+        Button buttonMappingForward = (Button) findViewById(R.id.buttonMappingForward);
+        buttonMappingForward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clientState == MainActivity.CLIENT_ROBOT_READY)
+                    sendMessage("mapping forward",0,0,"");
+            }
+        });
+
+        Button buttonMappingTurnLeft = (Button) findViewById(R.id.buttonMappingTurnLeft);
+        buttonMappingTurnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clientState == MainActivity.CLIENT_ROBOT_READY)
+                    sendMessage("mapping half pi left",0,0,"");
+            }
+        });
+
+        Button buttonMappingTurnRight = (Button) findViewById(R.id.buttonMappingTurnRight);
+        buttonMappingTurnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clientState == MainActivity.CLIENT_ROBOT_READY)
+                    sendMessage("mapping half pi right",0,0,"");
+            }
+        });
+
+        Button buttonMappingMeasure = (Button) findViewById(R.id.buttonMappingMeasure);
+        buttonMappingMeasure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clientState == MainActivity.CLIENT_ROBOT_READY)
+                    sendMessage("mapping measure",0,0,"");
+            }
+        });
+
         textViewLog = (TextView) findViewById(R.id.textViewLog);
         setClientState(clientState);
     }
@@ -295,15 +329,6 @@ public class MainActivity extends Activity {
             }
         }
         return false;
-    }
-
-    public void sendTaskXYMessage(View v) {
-        Log.i(TAG, "нажал на отправку сообщения");
-        int X = (Integer.parseInt(editTextX.getText().toString()));
-        int Y = (Integer.parseInt(editTextY.getText().toString()));
-        currentX = X;
-        currentY = Y;
-        sendMessage("task",X,Y,"ride to me");
     }
 
     public void setClientState(String str) {
@@ -377,8 +402,12 @@ public class MainActivity extends Activity {
 
     /**
      * Set the task for robot by sending message to the server.
-     * @param key "task": set task for robot
-     *            "stop": cancel robot executing task
+     * @param key "task": set task for robot;
+     *            "stop": cancel robot executing task;
+     *            "mapping forward": move on half a meter for mapping;
+     *            "mapping pi/2 left": turn on left pi/2 for mapping;
+     *            "mapping pi/2 right": turn on right pi/2 for mapping;
+     *            "mapping measure": measure beacon signal for mapping;
      * @param X target robot X coordinate
      * @param Y target robot Y coordinate
      * @param comment comment for robot target*/
