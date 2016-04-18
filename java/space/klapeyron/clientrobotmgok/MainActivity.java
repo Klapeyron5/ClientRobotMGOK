@@ -311,6 +311,15 @@ public class MainActivity extends Activity {
             }
         });
 
+        Button buttonMappingClearFile = (Button) findViewById(R.id.buttonMappingClearFile);
+        buttonMappingClearFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clientState == MainActivity.CLIENT_ROBOT_READY)
+                    sendMessage("mapping clear file",0,0,"");
+            }
+        });
+
         textViewLog = (TextView) findViewById(R.id.textViewLog);
         setClientState(clientState);
     }
@@ -408,6 +417,7 @@ public class MainActivity extends Activity {
      *            "mapping pi/2 left": turn on left pi/2 for mapping;
      *            "mapping pi/2 right": turn on right pi/2 for mapping;
      *            "mapping measure": measure beacon signal for mapping;
+     *            "mapping clear file": clear log file for mapping;
      * @param X target robot X coordinate
      * @param Y target robot Y coordinate
      * @param comment comment for robot target*/

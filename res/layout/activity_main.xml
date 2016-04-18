@@ -98,4 +98,14 @@
         android:layout_alignTop="@+id/buttonMappingTurnRight"
         android:layout_toRightOf="@+id/buttonMappingTurnRight" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clr"
+        android:id="@+id/buttonMappingClearFile"
+        android:layout_alignBottom="@+id/buttonMappingMeasure"
+        android:layout_toRightOf="@+id/buttonMap"
+        android:layout_toEndOf="@+id/buttonMap" />
+
 </RelativeLayout>
