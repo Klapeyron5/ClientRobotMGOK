@@ -320,6 +320,15 @@ public class MainActivity extends Activity {
             }
         });
 
+        Button buttonMappingMeasureDistribution = (Button) findViewById(R.id.buttonMappingMeasureDistribution);
+        buttonMappingMeasureDistribution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clientState == MainActivity.CLIENT_ROBOT_READY)
+                    sendMessage("mapping measure distribution",0,0,"");
+            }
+        });
+
         textViewLog = (TextView) findViewById(R.id.textViewLog);
         setClientState(clientState);
     }

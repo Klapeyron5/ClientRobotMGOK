@@ -18,8 +18,7 @@
         android:id="@+id/buttonStopRobot"
         android:layout_alignBottom="@+id/buttonDiscoverDevices"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/buttonMap" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -29,8 +28,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/buttonMap"
-        android:layout_toEndOf="@+id/buttonMap" />
+        android:layout_toEndOf="@+id/buttonMappingMeasureDistribution" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,12 +41,13 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:text="map"
         android:id="@+id/buttonMap"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toRightOf="@+id/buttonStopRobot"
+        android:layout_toLeftOf="@+id/buttonDiscoverDevices"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -105,7 +104,16 @@
         android:text="clr"
         android:id="@+id/buttonMappingClearFile"
         android:layout_alignBottom="@+id/buttonMappingMeasure"
-        android:layout_toRightOf="@+id/buttonMap"
-        android:layout_toEndOf="@+id/buttonMap" />
+        android:layout_toRightOf="@+id/buttonMappingMeasure" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DST"
+        android:id="@+id/buttonMappingMeasureDistribution"
+        android:layout_below="@+id/imageView"
+        android:layout_alignTop="@+id/buttonMappingClearFile"
+        android:layout_toRightOf="@+id/buttonMappingClearFile"/>
 
 </RelativeLayout>
